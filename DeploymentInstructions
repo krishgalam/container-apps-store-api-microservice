@@ -1,0 +1,20 @@
+#1 Open folder in VSCode as administrator
+#2 Install all required software from VS extensions Bicep, AZ Cli (version 2.20 and above)
+#3 Connect to subscription (if multiple directories are there then use below command to connect to specific directory)
+    az login --tenant capgeminifscoe.onmicrosoft.com --allow-no-subscriptions
+#4 Deploy using below command 
+az deployment group create -g rg-fs-coe-containerapps -f ./deploy/main.bicep \
+  -p \
+    minReplicas=0 \
+    nodeImage='ghcr.io/jeffhollan/container-apps-store-api-microservice/node-service:main' \
+    nodePort=3000 \
+    isNodeExternalIngress=true \
+    pythonImage='ghcr.io/jeffhollan/container-apps-store-api-microservice/python-service:main' \
+    pythonPort=5000 \
+    isPythonExternalIngress=false \
+    goImage='ghcr.io/jeffhollan/container-apps-store-api-microservice/go-service:main' \
+    goPort=8050 \
+    isGoExternalIngress=false \
+    containerRegistry=ghcr.io \
+    containerRegistryUsername=krishgalam\
+    containerRegistryPassword=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
