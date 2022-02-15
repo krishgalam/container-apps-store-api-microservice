@@ -1,0 +1,44 @@
+PreRequisites 
+follow deployment instructions from here https://github.com/krishgalam/container-apps-store-api-microservice
+
+
+
+#1 Open folder in VSCode as administrator
+#2 Install all required software from VS extensions Bicep, AZ Cli (version 2.20 and above)
+#3 Connect to subscription (if multiple directories are there then use below command to connect to specific directory)
+    az login --tenant capgeminifscoe.onmicrosoft.com --allow-no-subscriptions
+#4 Deploy using below command 
+az deployment group create -g rg-fs-coe-containerapps -f ./deploy/main.bicep \
+  -p \
+    minReplicas=0 \
+    nodeImage='docker.io/harigalam/node-service:latest' \
+    nodePort=3000 \
+    isNodeExternalIngress=true \
+    pythonImage='docker.io/harigalam/python-service:latest' \
+    pythonPort=5000 \
+    isPythonExternalIngress=false \
+    goImage='docker.io/harigalam/go-service:latest' \
+    goPort=8050 \
+    isGoExternalIngress=false \
+    containerRegistry=ghcr.io \
+    containerRegistryUsername=krishgalam\
+    containerRegistryPassword=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
+
+
+    Build
+    docker build -t harigalam/node-service .
+    docker login
+    Push
+    docker.io/harigalam/node-service
+
+    Build
+    docker build -t harigalam/python-service .
+    docker login
+    Push
+    docker.io/harigalam/python-service
+
+  Build
+    docker build -t harigalam/go-service .
+    docker login
+    Push
+    docker.io/harigalam/go-service
